@@ -13,6 +13,7 @@
 
 @class YouTubeUploadTicket;
 @class ConnectionRequestTicket;
+@class Assignment;
 
 // Controller handles video upload to YouTube and App-engine.
 @interface UploaderViewController : UIViewController
@@ -32,7 +33,7 @@
   UIButton *pauseOrResumeButton_;
 
   NSURL *videoURL_;
-  NSString *assignmentID_;
+  Assignment *assignment_;
   NSString *dateTaken_;
   NSString *latLong_;
 
@@ -62,7 +63,7 @@
 @property(nonatomic, retain) IBOutlet UIButton *pauseOrResumeButton;
 
 @property(nonatomic, retain) NSURL *videoURL;
-@property(nonatomic, copy) NSString *assignmentID;
+@property(nonatomic, retain) Assignment *assignment;
 @property(nonatomic, copy) NSString *dateTaken;
 @property(nonatomic, copy, readonly) NSString *latLong;
 
@@ -75,7 +76,7 @@
 
 // init method
 - (UploaderViewController *)initWithVideoURL:(NSURL *)videoURL
-                                assignmentID:(NSString *)assignmentID
+                                  assignment:(Assignment *)assignment
                                    dateTaken:(NSString *)dateTaken;
 
 // Show 'Terms Of Service'
