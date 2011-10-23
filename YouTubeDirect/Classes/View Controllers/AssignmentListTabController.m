@@ -106,11 +106,14 @@ static const CGFloat kNavigationBarHeight = 44;
 }
 
 - (void)captureVideo:(id)sender {
-  NSString *assignmentID =
-      sender ? [NSString stringWithFormat:@"%d", [sender tag]] : nil;
-  [self setSelectedAssignmentID:assignmentID];
+  if ([UIImagePickerController
+       isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    NSString *assignmentID =
+        sender ? [NSString stringWithFormat:@"%d", [sender tag]] : nil;
+    [self setSelectedAssignmentID:assignmentID];
 
-  [self showMediaPickerController:kMediaSourceTypeCamera];
+    [self showMediaPickerController:kMediaSourceTypeCamera];
+  }
 }
 
 - (void)selectVideo:(id)sender {
