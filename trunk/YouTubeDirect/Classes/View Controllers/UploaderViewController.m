@@ -312,9 +312,10 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
            fromLocation:(CLLocation *)oldLocation {
   if (!isLocationUpdated_) {
     isLocationUpdated_ = YES;
-    latLong_ = [[NSString stringWithFormat:@"lat=%0.2f lng=%0.2f",
-        newLocation.coordinate.latitude,
-        newLocation.coordinate.longitude] copy];
+    latLong_ =
+        [[NSString stringWithFormat:@"latitude = %0.2f longitude = %0.2f",
+          newLocation.coordinate.latitude,
+          newLocation.coordinate.longitude] copy];
     NSString *locationLabelText = [NSString stringWithFormat:@"%@ %@",
         [[self locationLabel] text], latLong_];
     [[self locationLabel] setText:locationLabelText];
