@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class AssignmentListController;
+@class Assignment;
 
 @protocol SignOutDelegate
  @required
@@ -23,7 +24,7 @@
  @private
   AssignmentListController *assignmentListController_;
 
-  NSString *selectedAssignmentID_;
+  Assignment *selectedAssignment_;
   NSString *selectedVideoDate_;
 
   id<SignOutDelegate> delegate_;

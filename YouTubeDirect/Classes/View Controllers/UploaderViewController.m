@@ -20,6 +20,7 @@
 #import "UploadModel.h"
 #import "YouTubeService.h"
 #import "GTMOAuth2Authentication.h"
+#import "Assignment.h"
 
 static CGFloat const kPortraitKeyboardHeight = 216;
 static CGFloat const kStatusBarHeight = 20;
@@ -66,7 +67,7 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
 @synthesize pauseOrResumeButton = pauseOrResumeButton_;
 
 @synthesize videoURL = videoURL_;
-@synthesize assignmentID = assignmentID_;
+@synthesize assignment = assignment_;
 @synthesize dateTaken = dateTaken_;
 @synthesize latLong = latLong_;
 
@@ -82,12 +83,12 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
 #pragma mark NSObject
 
 - (id)initWithVideoURL:(NSURL *)videoURL
-          assignmentID:(NSString *)assignmentID
+            assignment:(Assignment *)assignment
              dateTaken:(NSString *)dateTaken {
   self = [super initWithNibName:kUploaderViewControllerNib bundle:nil];
   if (self) {
     videoURL_ = [videoURL retain];
-    assignmentID_ = [assignmentID copy];
+    assignment_ = [assignment retain];
     dateTaken_ = [dateTaken copy];
   }
   return self;
@@ -109,7 +110,7 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
   [pauseOrResumeButton_ release];
 
   [videoURL_ release];
-  [assignmentID_ release];
+  [assignment_ release];
   [dateTaken_ release];
   [latLong_ release];
 
@@ -221,6 +222,13 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
   isUploadToYouTubeFinished_ = NO;
 
   [[self pauseOrResumeButton] setHidden:YES];
+  NSString *title = nil;
+  if (assignment_) {
+    title = [assignment_ description];
+  } else {
+    title = NSLocalizedString(@"Default Assignment", @"");
+  }
+  [self setTitle:title];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -361,7 +369,7 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
       [[[UploadModel alloc] initWithTitle:[[self titleField] text]
                               description:[[self descriptionField] text]
                                      tags:tags
-                             assignmentID:[self assignmentID]
+                             assignmentID:[[self assignment] assignmentID]
                                   videoID:nil
                                 dateTaken:[self dateTaken]
                                   latLong:[self latLong]
@@ -420,14 +428,16 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
     UIAlertView *alertView =
         [[[UIAlertView alloc]
           initWithTitle:NSLocalizedString(@"ERROR", @"")
-          message:NSLocalizedString(@"Press 'Retry last upload' to try again!'",
+          message:NSLocalizedString([error localizedDescription],
                                     @"")
           delegate:nil
           cancelButtonTitle:NSLocalizedString(@"OK", @"")
           otherButtonTitles:nil] autorelease];
 
     [[self uploadStatusView] setHidden:YES];
-    [[self retryLastUploadButton] setEnabled:YES];
+    if ([ticket uploadLocationURL]) {
+      [[self retryLastUploadButton] setEnabled:YES];
+    }
     [alertView show];
   }
 }

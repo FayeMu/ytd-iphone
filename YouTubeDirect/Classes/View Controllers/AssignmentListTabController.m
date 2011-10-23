@@ -13,6 +13,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "AssignmentListController.h"
+#import "AssignmentListCell.h"
+#import "Assignment.h"
 #import "UploaderViewController.h"
 #import "UIColor+YouTubeDirect.h"
 
@@ -47,14 +49,14 @@ static const CGFloat kNavigationBarHeight = 44;
 
 @property(nonatomic, retain, readonly) AssignmentListController
     *assignmentListController;
-@property(nonatomic, copy) NSString *selectedAssignmentID;
+@property(nonatomic, retain) Assignment *selectedAssignment;
 
 @end
 
 @implementation AssignmentListTabController
 
 @synthesize assignmentListController = assignmentListController_;
-@synthesize selectedAssignmentID = selectedAssignmentID_;
+@synthesize selectedAssignment = selectedAssignment_;
 
 
 #pragma mark -
@@ -70,7 +72,7 @@ static const CGFloat kNavigationBarHeight = 44;
 
 - (void)dealloc {
   [assignmentListController_ release];
-  [selectedAssignmentID_ release];
+  [selectedAssignment_ release];
   [selectedVideoDate_ release];
 
   [super dealloc];
@@ -108,19 +110,23 @@ static const CGFloat kNavigationBarHeight = 44;
 - (void)captureVideo:(id)sender {
   if ([UIImagePickerController
        isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    NSString *assignmentID =
-        sender ? [NSString stringWithFormat:@"%d", [sender tag]] : nil;
-    [self setSelectedAssignmentID:assignmentID];
-
+    Assignment *assignment = nil;
+    if ([[[sender superview] superview] isKindOfClass:[AssignmentListCell class]]) {
+      AssignmentListCell *cellView = (AssignmentListCell *)[[sender superview] superview];
+      assignment = [cellView assignment];
+    }
+    [self setSelectedAssignment:assignment];
     [self showMediaPickerController:kMediaSourceTypeCamera];
   }
 }
 
 - (void)selectVideo:(id)sender {
-  NSString *assignmentID =
-      sender ? [NSString stringWithFormat:@"%d", [sender tag]] : nil;
-  [self setSelectedAssignmentID:assignmentID];
-
+  Assignment *assignment = nil;
+  if ([[[sender superview] superview] isKindOfClass:[AssignmentListCell class]]) {
+    AssignmentListCell *cellView = (AssignmentListCell *)[[sender superview] superview];
+    assignment = [cellView assignment];
+  }
+  [self setSelectedAssignment:assignment];
   [self showMediaPickerController:kMediaSourceTypePhotoLibrary];
 }
 
@@ -147,9 +153,9 @@ static const CGFloat kNavigationBarHeight = 44;
 
 - (void)attachVideo:(NSURL *)videoURL {
   UploaderViewController *uploaderViewController =
-      [[UploaderViewController alloc] initWithVideoURL:videoURL
-                                          assignmentID:selectedAssignmentID_
-                                             dateTaken:selectedVideoDate_];
+      [[[UploaderViewController alloc] initWithVideoURL:videoURL
+                                             assignment:selectedAssignment_
+                                             dateTaken:selectedVideoDate_] autorelease];
   UIBarButtonItem *backButton =
       [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"")
                                         style:UIBarButtonItemStylePlain
