@@ -10,6 +10,7 @@
 
 @implementation Assignment
 
+@synthesize title = title_;
 @synthesize description = description_;
 @synthesize status = status_;
 @synthesize assignmentID = assignmentID_;
@@ -18,15 +19,17 @@
 @synthesize createdDate = createdDate_;
 @synthesize heading = heading_;
 
-- (id)initWithDescription:(NSString *)description
-                   status:(NSString *)status
-             assignmentID:(NSString *)assignmentID
-               playlistID:(NSString *)playlistID
-              updatedDate:(NSDate *)updatedDate
-              createdDate:(NSDate *)createdDate
-                  heading:(BOOL)heading {
+- (id)initWithTitle:(NSString *)title
+        description:(NSString *)description
+             status:(NSString *)status
+       assignmentID:(NSString *)assignmentID
+         playlistID:(NSString *)playlistID
+        updatedDate:(NSDate *)updatedDate
+        createdDate:(NSDate *)createdDate
+            heading:(BOOL)heading {
   self = [super init];
   if (self) {
+    title_ = [title copy];
     description_ = [description copy];
     status_ = [status copy];
     assignmentID_ = [assignmentID copy];
@@ -39,6 +42,7 @@
 }
 
 - (void)dealloc {
+  [title_ release];
   [description_ release];
   [status_ release];
   [assignmentID_ release];
