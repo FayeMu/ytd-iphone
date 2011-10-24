@@ -437,6 +437,8 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
     [[self uploadStatusView] setHidden:YES];
     if ([ticket uploadLocationURL]) {
       [[self retryLastUploadButton] setEnabled:YES];
+    } else {
+      [[self startUploadButton] setEnabled:YES];
     }
     [alertView show];
   }
