@@ -15,6 +15,7 @@
 #import "Assignment.h"
 #import "SBJSON.h"
 
+static NSString *const kAssignTitleKey = @"title";
 static NSString *const kAssignDescriptionKey = @"description";
 static NSString *const kAssignCreatedKey = @"created";
 static NSString *const kAssignUpdatedKey = @"updated";
@@ -287,7 +288,8 @@ static NSString *const kCompareDateFormat = @"EEE',' MMM dd',' yyyy";
     }
 
     Assignment *assignment = [[[Assignment alloc]
-        initWithDescription:[item objectForKey:kAssignDescriptionKey]
+        initWithTitle:[item objectForKey:kAssignTitleKey]
+        description:[item objectForKey:kAssignDescriptionKey]
         status:[item objectForKey:kAssignStatusKey]
         assignmentID:[[item objectForKey:kAssignIDKey] stringValue]
         playlistID:[item objectForKey:kAssignPlaylistIDKey]

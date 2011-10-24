@@ -11,6 +11,7 @@
 // Model class for an assignment.
 @interface Assignment : NSObject {
  @private
+  NSString *title_;
   NSString *description_;
   NSString *status_;
   NSString *assignmentID_;
@@ -25,6 +26,7 @@
 @property(nonatomic, copy, readonly) NSString *status;
 @property(nonatomic, copy, readonly) NSString *assignmentID;
 @property(nonatomic, copy, readonly) NSString *playlistID;
+@property(nonatomic, copy, readonly) NSString *title;
 @property(nonatomic, copy, readonly) NSString *description;
 
 @property(nonatomic, retain, readonly) NSDate *updatedDate;
@@ -33,12 +35,13 @@
 @property(nonatomic, assign, getter=isHeading, readonly) BOOL heading;
 
 // init method
-- (id)initWithDescription:(NSString *)description
-                   status:(NSString *)status
-             assignmentID:(NSString *)assignmentID
-               playlistID:(NSString *)playlistID
-              updatedDate:(NSDate *)updatedDate
-              createdDate:(NSDate *)createdDate
-                  heading:(BOOL)heading;
+- (id)initWithTitle:(NSString *)title
+        description:(NSString *)description
+             status:(NSString *)status
+       assignmentID:(NSString *)assignmentID
+         playlistID:(NSString *)playlistID
+        updatedDate:(NSDate *)updatedDate
+        createdDate:(NSDate *)createdDate
+            heading:(BOOL)heading;
 
 @end
