@@ -452,6 +452,7 @@ static NSString *const kUploaderViewControllerNib = @"UploaderViewController";
 
 - (void)connectionResponse:(NSString *)response
                  withError:(NSError *)error {
+  [self setConnectionRequestTicket:nil];
   // check for correct response.
   if (!error) {
     [self setProgress:100];
