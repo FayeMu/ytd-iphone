@@ -42,6 +42,7 @@ static NSString *const kVideoLocationKey = @"videoLocation";
 static NSString *const kAssignmentIDKey = @"assignmentId";
 
 static NSString *const kUserAgent = @"YouTube DIRECT";
+static NSString *const kContentType = @"application/json";
 
 @interface ConnectionRequestHandler ()
 
@@ -112,6 +113,7 @@ static NSString *const kUserAgent = @"YouTube DIRECT";
 
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   [request setValue:kUserAgent forHTTPHeaderField:@"User-Agent"];
+  [request setValue:kContentType forHTTPHeaderField:@"Content-Type"];
   [request setHTTPMethod:@"POST"];
   [request setHTTPBody:postData];
 
