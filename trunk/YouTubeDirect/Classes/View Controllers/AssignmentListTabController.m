@@ -222,8 +222,8 @@ static const CGFloat kNavigationBarHeight = 44;
       videoDate = [NSDate date];
     } else {
       videoDate = [myasset valueForProperty:ALAssetPropertyDate];
-      if (videoDate == nil) {
-        videoDate = [NsDate date];
+      if (!videoDate) {
+        videoDate = [NSDate date];
       }
     }
     NSDateFormatter *fmt = [[[NSDateFormatter alloc] init] autorelease];
@@ -243,7 +243,7 @@ static const CGFloat kNavigationBarHeight = 44;
   NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
   if ([mediaType isEqualToString:(NSString *)kUTTypeMovie]) {
     NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
-    if (videoURL == nil) {
+    if (!videoURL) {
       UIAlertView *alertView = [[[UIAlertView alloc]
           initWithTitle:NSLocalizedString(@"Error", @"")
           message:NSLocalizedString(@"Video selection interrupted.", @"")
