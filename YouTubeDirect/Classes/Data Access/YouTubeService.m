@@ -18,7 +18,7 @@ static GDataServiceGoogleYouTube *gShared = nil;
 
 + (GDataServiceGoogleYouTube *)sharedInstance {
   @synchronized(self) {
-    if (gShared == nil) {
+    if (!gShared) {
       gShared = [[GDataServiceGoogleYouTube allocWithZone:NULL] init];
       [gShared setShouldCacheResponseData:YES];
       [gShared setServiceShouldFollowNextLinks:YES];

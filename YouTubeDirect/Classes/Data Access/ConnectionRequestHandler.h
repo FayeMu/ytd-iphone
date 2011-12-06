@@ -6,7 +6,7 @@
 //  Copyright Google Inc 2011. All rights reserved.
 //
 
-#import "ConnectionRequestTicket.h";
+#import "ConnectionRequestTicket.h"
 
 @class UploadModel;
 
