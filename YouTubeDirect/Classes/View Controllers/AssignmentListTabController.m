@@ -222,6 +222,9 @@ static const CGFloat kNavigationBarHeight = 44;
       videoDate = [NSDate date];
     } else {
       videoDate = [myasset valueForProperty:ALAssetPropertyDate];
+      if (videoDate == nil) {
+        videoDate = [NsDate date];
+      }
     }
     NSDateFormatter *fmt = [[[NSDateFormatter alloc] init] autorelease];
     [fmt setDateFormat:kDefaultDateFormat];
